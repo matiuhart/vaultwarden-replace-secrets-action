@@ -6,6 +6,7 @@ This action is based on a bash script that was created to integrate Vaultwarden 
 The script will search defined Linux environment variables inside of the provided file as a parameter (used as a template). For each variable found in the file will search an entry (with the same variable name) in Vaultwarden, then   will create a new file with .replaced suffix adding the secrets values with envsubst.
 
 ## Inputs
+
 **BW_CLIENTID:** Your clientId of your vw user 
 
 **BW_CLIENTSECRET:** Your clientSecret of your vw user 
@@ -14,7 +15,7 @@ The script will search defined Linux environment variables inside of the provide
 
 **BW_SERVER:** Your vw server
 
-**FILE_TO_REPLACE:** File which contains secrets. The secrets are replaced with envsubst so you need to define it as          $MY_SECRET_NAME in the vw entry name and the template secret file (You can see an example file in deployments/docker-compose.yaml)
+**FILES_TO_REPLACE:** Files which contains secrets to replace. This variable accept multiple paths specified by line breaks (doesn't support yaml list). You can see example files in example_template_files/ folder.
 
 ## GA Variables and secrets
 You need to define the below secrets and variables in your pipeline, for the clientID and clientSecret you should generate an API Key for the Vaultwarden user in *Account Settings>Security>Keys>API Keys*.
@@ -36,7 +37,7 @@ You need to define the below secrets and variables in your pipeline, for the cli
 ## Secrets replacement file
 You should define your template file replacing the secrets values as bash environment values, for eg:
 
-*docker-compose.yaml file*
+*docker-compose1.yaml file*
 ```
 version: "3.7"
 
@@ -89,8 +90,13 @@ jobs:
           BW_CLIENTSECRET: ${{ secrets.BW_CLIENTSECRET }}
           BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
           BW_SERVER: ${{ vars.BW_SERVER }}
-          FILE_TO_REPLACE: example_template_files/docker-compose.yaml
-      
-      - name: Get the output time
-        run: cat example_template_files/docker-compose.yaml.replaced
+          FILES_TO_REPLACE: |- 
+            example_template_files/docker-compose1.yaml
+            example_template_files/docker-compose2.yaml
+     
+      - name: Get the output for docker-compose1 file
+        run: cat example_template_files/docker-compose1.yaml.replaced
+
+      - name: Get the output for docker-compose2 file
+        run: cat example_template_files/docker-compose2.yaml.replaced
 ```
