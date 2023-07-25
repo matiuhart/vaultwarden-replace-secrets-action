@@ -61,7 +61,7 @@ replace_secrets () {
 ## Execution
 #
 
-echo -e  "\nConfiguring bw access"
+echo -e  "\nConfiguring Vaultwarden server access"
 bw_config
 
 for MY_FILE in $FILES_TO_REPLACE

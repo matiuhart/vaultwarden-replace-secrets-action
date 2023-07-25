@@ -3,7 +3,7 @@ on: [push]
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Vault Warden secrets replacement
+    name: Vaultwarden secrets replacement
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -20,8 +20,8 @@ jobs:
             example_template_files/docker-compose1.yaml
             example_template_files/docker-compose2.yaml
      
-      - name: Get the output time
+      - name: Get the output for docker-compose1 file
         run: cat example_template_files/docker-compose1.yaml.replaced
 
-      - name: Get the output time
+      - name: Get the output for docker-compose2 file
         run: cat example_template_files/docker-compose2.yaml.replaced

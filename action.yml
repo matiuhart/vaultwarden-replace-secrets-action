@@ -19,7 +19,7 @@ inputs:
     required: true
     default: ''
   FILES_TO_REPLACE:
-    description: 'File for proccess replacements'
+    description: 'Files for proccess replacements'
     required: true
     default: ''
 runs:
