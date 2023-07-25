@@ -6,15 +6,18 @@ envsubst < /bw_variables_export
 # Exporting bw login variables
 source /bw_variables_export
 
-MY_FILE="$GITHUB_WORKSPACE/$INPUT_FILE_TO_REPLACE"
+FILES_TO_REPLACE=$(echo $INPUT_FILES_TO_REPLACE|  tr -s '\n' ' ')
+
+#MY_FILE="$GITHUB_WORKSPACE/$INPUT_FILE_TO_REPLACE"
 
 # Search secrets func
 search_entries_in_file () {
+  local FILE=$GITHUB_WORKSPACE/$1
   # Uncomment to run with alpine
-  local MY_SECRETS=$(egrep -o '(\$)([A-Z]|[1-9]|[_]$)\w+' $MY_FILE |awk -F "$" '{print$2}')
+  local MY_SECRETS=$(egrep -o '(\$)([A-Z]|[1-9]|[_]$)\w+' $FILE |awk -F "$" '{print$2}')
   
   # Uncomment to run with distro no alpine
-  #local MY_SECRETS=$(grep -oP '(\$)([A-Z]|[1-9]|[_]$)\w+' $MY_FILE|awk -F "$" '{print$2}')
+  #local MY_SECRETS=$(grep -oP '(\$)([A-Z]|[1-9]|[_]$)\w+' $FILE|awk -F "$" '{print$2}')
   
   echo "$MY_SECRETS"
 }
@@ -50,26 +53,31 @@ get_secrets () {
 
 # Replace secrets in file func
 replace_secrets () {
-  envsubst < "$MY_FILE" > "$MY_FILE.replaced"
+  local FILE=$GITHUB_WORKSPACE/$1
+  envsubst < "$FILE" > "$FILE.replaced"
 }
 
 #
 ## Execution
 #
 
-MY_SECRETS_IN_FILE=$(search_entries_in_file "$MY_FILE")
-
-echo -e  "\nSecrets to replace: \n$MY_SECRETS_IN_FILE \n"
-
 echo -e  "\nConfiguring bw access"
 bw_config
 
-echo -e  "\nCreating secrets file...\n"
-get_secrets "$MY_SECRETS_IN_FILE"
+for MY_FILE in $FILES_TO_REPLACE
+do
+  MY_SECRETS_IN_FILE=$(search_entries_in_file "$MY_FILE")
 
-echo -e  "\nLoading secrets...\n"
-source secrets
-rm secrets
+  echo -e  "\nArchivo a procesar: $MY_FILE \n"
+  echo -e  "\nSecrets to replace: \n$MY_SECRETS_IN_FILE \n"
 
-echo -e  "\nCreating new file from $MY_FILE to $MY_FILE.replaced \n"
-replace_secrets
+  echo -e  "\nDumping secrets for $MY_FILE...\n"
+  get_secrets "$MY_SECRETS_IN_FILE"
+
+  echo -e  "\nLoading secrets...\n"
+  source secrets
+  rm secrets
+
+  echo -e  "\nCreating new file from $MY_FILE to $MY_FILE.replaced \n"
+  replace_secrets $MY_FILE
+done

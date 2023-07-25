@@ -18,13 +18,10 @@ inputs:
     description: 'Vaultwareden server'
     required: true
     default: ''
-  FILE_TO_REPLACE:
+  FILES_TO_REPLACE:
     description: 'File for proccess replacements'
     required: true
     default: ''
-# outputs:
-#   time: # id of output
-#     description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
