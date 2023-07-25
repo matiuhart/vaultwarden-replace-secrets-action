@@ -1,6 +1,6 @@
 # Vaultwarden secrets replacement Actions
 
-This action is based on a bash script that was created to integrate Vaultwarden to Github Actions for secrets replacements. Currently, Vaultwarden doesn't support Bitwarden Public API/Organization API key, this limits the usage of Github Actions snippets developed for BitWarden. Also, it can work with Bitwarden
+This action is based on a bash script that was created to integrate Vaultwarden to Github Actions for secrets replacements. Currently, Vaultwarden doesn't support Bitwarden Public API/Organization API key, it limits the usage of Github Actions snippets developed for BitWarden. Also, it can work with Bitwarden
 
 ## How it works?
 The script will search defined Linux environment variables inside of the provided file as a parameter (used as a template). For each variable found in the file will search an entry (with the same variable name) in Vaultwarden, then   will create a new file with .replaced suffix adding the secrets values with envsubst.
