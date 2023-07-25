@@ -1,24 +1,23 @@
-# Vaultwarden/Bitwarden secrets replacement solution
+# Vaultwarden secrets replacement Actions
 
-This action is based on a bash script wich was created to integrate Vaultwarden to Github Actions for secrets replacements. Currently, Vault Warden, doesn't supports Bitwarden Public API/Organization API key, this limit the usage of Github Actions snippets developped for Bit Warden. Also it can works with Bitwarden
+This action is based on a bash script that was created to integrate Vaultwarden to Github Actions for secrets replacements. Currently, Vaultwarden doesn't support Bitwarden Public API/Organization API key, this limits the usage of Github Actions snippets developed for BitWarden. Also, it can work with Bitwarden
 
 ## How it works?
-The script will search defined Linux environment variables inside of the provided file as parameter (used as a template). For each variable founded in file will search an entry (with the same variable name) in Vaultwarden, then   will create a new file with .replaced suffix adding the secrets values with envsubst.
+The script will search defined Linux environment variables inside of the provided file as a parameter (used as a template). For each variable found in the file will search an entry (with the same variable name) in Vaultwarden, then   will create a new file with .replaced suffix adding the secrets values with envsubst.
 
 ## Inputs
-**BW_CLIENTID:** Your clientId of your vw/bw user 
+**BW_CLIENTID:** Your clientId of your vw user 
 
-**BW_CLIENTSECRET:** Your clientSecret of your vw/bw user 
+**BW_CLIENTSECRET:** Your clientSecret of your vw user 
 
-**BW_PASSWORD:** Your vw/bw user password
+**BW_PASSWORD:** Your vw user password
 
-**BW_SERVER:** Your vw/bw server
+**BW_SERVER:** Your vw server
 
-**FILE_TO_REPLACE:** File wich contains secrets. The secrets are replaced with envsubst so you need define it as            
-                $MY_SECRET_NAME in the vw entry name and the template secret file (You can see an example file in deployments/docker-compose.yaml)
+**FILE_TO_REPLACE:** File which contains secrets. The secrets are replaced with envsubst so you need to define it as          $MY_SECRET_NAME in the vw entry name and the template secret file (You can see an example file in deployments/docker-compose.yaml)
 
 ## GA Variables and secrets
-You need to define the bellow secrets and variables in you pipeline, for the clientID and clientSecret you will should to generate an API Key for the vaultwarden user in *Account Settings>Security>Keys>API Keys*.
+You need to define the below secrets and variables in your pipeline, for the clientID and clientSecret you should generate an API Key for the Vaultwarden user in *Account Settings>Security>Keys>API Keys*.
 
 ### Secrets
 
@@ -35,7 +34,7 @@ You need to define the bellow secrets and variables in you pipeline, for the cli
 
 
 ## Secrets replacement file
-You should define your template file replacing the secrets values as bash environment value, for eg:
+You should define your template file replacing the secrets values as bash environment values, for eg:
 
 *docker-compose.yaml file*
 ```
@@ -60,8 +59,8 @@ services:
 ```
 
 ## Vaultwarden Configs
-You need to create new entries with the same name as varibles in your server. The value is get it from the *Password* field.
-In my case, I need to create three new entries with the secret added in password item:
+You need to create new entries with the same name as the variable in your Vaultwarden server. The value is pulled from the *Password* field.
+In my case, I need to create four new entries with the secret added in the password item:
 
 ```
         Secret Name                   Password value
@@ -85,14 +84,13 @@ jobs:
       
       - name: secrets replacement
         uses: matiuhart/vaultwarden-replace-secrets-action@master
-        id: secret_replace
         with:
           BW_CLIENTID: ${{ secrets.BW_CLIENTID }}
           BW_CLIENTSECRET: ${{ secrets.BW_CLIENTSECRET }}
           BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
           BW_SERVER: ${{ vars.BW_SERVER }}
-          FILE_TO_REPLACE: docker-compose.yaml
+          FILE_TO_REPLACE: example_template_files/docker-compose.yaml
       
       - name: Get the output time
-        run: cat docker-compose.yaml.replaced
+        run: cat example_template_files/docker-compose.yaml.replaced
 ```
