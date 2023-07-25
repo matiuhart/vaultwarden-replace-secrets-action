@@ -1,13 +1,14 @@
 #!/bin/sh -l
 
-
+# Assigning values for bw-cli login
 envsubst < /bw_variables_export
 
+# Exporting bw login variables
 source /bw_variables_export
 
 MY_FILE="$GITHUB_WORKSPACE/$INPUT_FILE_TO_REPLACE"
 
-
+# Search secrets func
 search_entries_in_file () {
   # Uncomment to run with alpine
   local MY_SECRETS=$(egrep -o '(\$)([A-Z]|[1-9]|[_]$)\w+' $MY_FILE |awk -F "$" '{print$2}')
@@ -18,6 +19,7 @@ search_entries_in_file () {
   echo "$MY_SECRETS"
 }
 
+# bw-cli config func
 bw_config () {
   bw config server "$BW_SERVER"
 
@@ -35,12 +37,10 @@ bw_config () {
   bw sync -f
 }
 
-
+# Get secrets from vaultwarden func
 get_secrets () {
   local ENTRIES="$@"
 
-  #echo -e "\nI'll recover values for the next entries: \n$ENTRIES"
-  
   for entry in $ENTRIES
   do
     MY_SECRET=$(bw get password $entry)
@@ -48,6 +48,7 @@ get_secrets () {
   done
 }
 
+# Replace secrets in file func
 replace_secrets () {
   envsubst < "$MY_FILE" > "$MY_FILE.replaced"
 }
@@ -65,9 +66,6 @@ bw_config
 
 echo -e  "\nCreating secrets file...\n"
 get_secrets "$MY_SECRETS_IN_FILE"
-
-# echo -e  "\nContenido de archivo secrets...\n"
-# cat secrets
 
 echo -e  "\nLoading secrets...\n"
 source secrets
