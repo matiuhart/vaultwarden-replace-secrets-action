@@ -1,0 +1,36 @@
+# action.yml
+name: 'Vault Warden secrets replacement'
+description: 'Get secrets from VW and replaces in the specified file'
+inputs:
+  BW_CLIENTID:
+    description: 'OAuth client ID'
+    required: true
+    default: ''
+  BW_CLIENTSECRET:
+    description: 'OAuth client secret'
+    required: true
+    default: ''
+  BW_PASSWORD:
+    description: 'Password of your VW/BW user'
+    required: true
+    default: ''
+  BW_SERVER:
+    description: 'Vaultwareden server'
+    required: true
+    default: ''
+  FILE_TO_REPLACE:
+    description: 'File for proccess replacements'
+    required: true
+    default: ''
+# outputs:
+#   time: # id of output
+#     description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.BW_CLIENTID }}
+    - ${{ inputs.BW_CLIENTSECRET }}    
+    - ${{ inputs.BW_PASSWORD }}
+    - ${{ inputs.BW_SERVER }}
+    - ${{ inputs.FILE_TO_REPLACE }}

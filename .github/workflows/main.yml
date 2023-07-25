@@ -1,0 +1,22 @@
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Vault Warden secrets replacement
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Secrets replacement
+        uses: ./
+        id: secret_replace
+        with:
+          BW_CLIENTID: ${{ secrets.BW_CLIENTID }}
+          BW_CLIENTSECRET: ${{ secrets.BW_CLIENTSECRET }}
+          BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+          BW_SERVER: ${{ vars.BW_SERVER }}
+          FILE_TO_REPLACE: example_template_files/docker-compose.yaml
+      
+      - name: Get the output time
+        run: cat example_template_files/docker-compose.yaml.replaced
