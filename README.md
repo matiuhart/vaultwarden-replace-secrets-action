@@ -84,7 +84,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: secrets replacement
-        uses: matiuhart/vaultwareden-replace-secrets-action@v1
+        uses: matiuhart/vaultwareden-replace-secrets-action
         id: secret_replace
         with:
           BW_CLIENTID: ${{ secrets.BW_CLIENTID }}
