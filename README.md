@@ -76,7 +76,7 @@ In my case, I need to create four new entries with the secret added in the passw
 on: [push]
 
 jobs:
-  hello_world_job:
+  vw_secrets_replacement:
     runs-on: ubuntu-latest
     name: Vault Warden secrets replacement
     steps:
