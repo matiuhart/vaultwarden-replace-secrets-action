@@ -3,7 +3,7 @@
 This action is based on a bash script that was created to integrate Vaultwarden to Github Actions for secrets replacements. Currently, Vaultwarden doesn't support Bitwarden Public API/Organization API key, it limits the usage of Github Actions snippets developed for BitWarden. Also, it can work with Bitwarden
 
 ## How it works?
-The script will search defined Linux environment variables inside of the provided file as a parameter (used as a template). For each variable found in the file will search an entry (with the same variable name) in Vaultwarden, then   will create a new file with .replaced suffix adding the secrets values with envsubst.
+The script will search defined Linux environment variables inside of the provided file as a parameter (used as a template). For each variable found in the template file, it will search a Vaultwarden entry with the same name of the variable, then   will create a new file with .replaced suffix replacing the values with envsubst.
 
 ## Inputs
 
@@ -15,7 +15,7 @@ The script will search defined Linux environment variables inside of the provide
 
 **BW_SERVER:** Your vw server
 
-**FILES_TO_REPLACE:** Files which contains secrets to replace. This variable accept multiple paths specified by line breaks (doesn't support yaml list). You can see example files in example_template_files/ folder.
+**FILES_TO_REPLACE:** Template files that contain secrets to replace. This variable accepts specify multiple paths by line breaks (doesn't support yaml list). You can see example files in example_template_files/ folder.
 
 ## GA Variables and secrets
 You need to define the below secrets and variables in your pipeline, for the clientID and clientSecret you should generate an API Key for the Vaultwarden user in *Account Settings>Security>Keys>API Keys*.
