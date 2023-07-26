@@ -1,17 +1,16 @@
-# action.yml
 name: 'Vaultwarden secrets replacement'
-description: 'Get secrets from VW and replaces in the specified file'
+description: 'Get secrets from Vaultwarden and replaces them in the specified files'
 inputs:
   BW_CLIENTID:
-    description: 'OAuth client ID'
+    description: 'VW OAuth client ID'
     required: true
     default: ''
   BW_CLIENTSECRET:
-    description: 'OAuth client secret'
+    description: 'VW OAuth client secret'
     required: true
     default: ''
   BW_PASSWORD:
-    description: 'Password of your VW/BW user'
+    description: 'Password of your VW user'
     required: true
     default: ''
   BW_SERVER:
@@ -19,7 +18,7 @@ inputs:
     required: true
     default: ''
   FILES_TO_REPLACE:
-    description: 'Files for proccess replacements'
+    description: 'Files to process replacements'
     required: true
     default: ''
 runs:
