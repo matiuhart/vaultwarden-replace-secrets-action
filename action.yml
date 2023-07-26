@@ -1,5 +1,5 @@
 # action.yml
-name: 'Vault Warden secrets replacement'
+name: 'Vaultwarden secrets replacement'
 description: 'Get secrets from VW and replaces in the specified file'
 inputs:
   BW_CLIENTID:
