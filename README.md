@@ -15,7 +15,7 @@ The script will search defined Linux environment variables inside of the provide
 
 **BW_SERVER:** Your vw server
 
-**FILES_TO_REPLACE:** Template files that contain secrets to replace. This variable accepts specify multiple paths by line breaks (doesn't support yaml list). You can see example files in example_template_files/ folder.
+**FILES_TO_REPLACE:** Template files that contain secrets to replace. This variable accepts specify multiple file paths by line breaks (doesn't support yaml list). You can see example files in example_template_files/ folder.
 
 ## GA Variables and secrets
 You need to define the below secrets and variables in your pipeline, for the clientID and clientSecret you should generate an API Key for the Vaultwarden user in *Account Settings>Security>Keys>API Keys*.
