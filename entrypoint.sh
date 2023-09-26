@@ -76,7 +76,7 @@ do
 
   echo -e  "\nLoading secrets...\n"
   source secrets
-  rm secrets
+  #rm secrets
 
   echo -e  "\nCreating new file from $MY_FILE to $MY_FILE.replaced \n"
   replace_secrets $MY_FILE
