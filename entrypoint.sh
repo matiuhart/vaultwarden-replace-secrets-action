@@ -81,3 +81,21 @@ do
   echo -e  "\nCreating new file from $MY_FILE to $MY_FILE.replaced \n"
   replace_secrets $MY_FILE
 done
+
+if [ -z "$DEBUG" ]
+then
+  echo "Debug for secrets disabled"
+  DEBUG=false
+else
+  echo "Debug for secrets enabled"
+  DEBUG=true
+fi
+
+if [ "$DEBUG" = true ]
+then
+  for MY_FILE in $FILES_TO_REPLACE
+  do
+    echo "Se han reemplazado secrets en $MY_FILE el archivo generado es:"
+    cat $MY_FILE.replaced
+  done
+fi
